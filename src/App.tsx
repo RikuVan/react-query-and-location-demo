@@ -17,13 +17,10 @@ import { WizardFailure, WizardOne, WizardSuccess, WizardTwo } from './components
 
 import { CityWeather } from './components/CityWeather'
 import { ReactLocationDevtools } from 'react-location-devtools'
-import { ReactLocationSimpleCache } from 'react-location-simple-cache'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { ReduxVsQueryTable } from './components/ReduxVsQueryTable'
 import axios from 'axios'
 import { delayFn } from './utils'
-
-const routeCache = new ReactLocationSimpleCache<LocationGenerics>()
 
 export type WeatherData = {
   coord: {
@@ -88,13 +85,11 @@ const routes: Route<LocationGenerics>[] = [
       {
         path: '/',
         element: <Weather />,
-        loader: async ({ params: { city } }) => {
-          if (!city) {
-            return (
-              queryClient.getQueryData('weather') ??
-              queryClient.fetchQuery('weather', () => fetchWeather('tampere')).then(() => ({}))
-            )
-          }
+        loader: async () => {
+          return (
+            queryClient.getQueryData('weather') ??
+            queryClient.fetchQuery('weather', () => fetchWeather('tampere')).then(() => ({}))
+          )
           return {}
         },
       },
@@ -233,7 +228,6 @@ export function useForm() {
   const navigate = useNavigate()
   const setData = (data: Partial<FormData>) => {
     queryClient.setQueryData<Partial<FormData>>('form', (queryData) => {
-      console.log(queryData, data)
       return { ...queryData, ...data }
     })
   }
