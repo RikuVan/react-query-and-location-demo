@@ -1,0 +1,30 @@
+nav {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0;
+  justify-content: center;
+}
+
+nav li {
+  list-style: none;
+  padding-right: 2em;
+}
+
+main {
+  min-height: 80vh;
+}
+
+.redux-vs-query-table th {
+  font-size: 32px;
+}
+
+.redux-vs-query-table td {
+  font-size: 20px;
+  padding: 1em;
+}
