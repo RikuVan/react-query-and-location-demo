@@ -66,7 +66,7 @@ export type WeatherData = {
 export type LocationGenerics = MakeGenerics<{
   LoaderData: {
     user: User
-    me: {
+    dude: {
       id: string
       name: string
       avatar_url: string
@@ -78,7 +78,10 @@ export type LocationGenerics = MakeGenerics<{
 }>
 
 const routes: Route<LocationGenerics>[] = [
-  { path: '/', element: <Home /> },
+  {
+    path: '/',
+    element: <Home />,
+  },
   {
     path: '/weather',
     children: [
@@ -139,7 +142,7 @@ const routes: Route<LocationGenerics>[] = [
     path: '/about',
     element: <About />,
     loader: async () => {
-      return { me: await fetchMe() }
+      return { dude: await fetchGithubUser('tannerlinsley') }
     },
   },
 ]
@@ -173,13 +176,13 @@ function App() {
 
 function About() {
   const {
-    data: { me },
+    data: { dude },
   } = useMatch() as any
   return (
     <main>
       <h1>About</h1>
-      <p>{me?.name}</p>
-      <img src={me.avatar_url as string} />
+      <p>{dude?.name}</p>
+      <img src={dude.avatar_url as string} />
     </main>
   )
 }
@@ -273,7 +276,7 @@ function Menu() {
                 to={to}
                 getActiveProps={() => ({
                   style: {
-                    borderBottom: '1px solid var(--links)',
+                    textDecoration: 'underline',
                   },
                 })}
                 preload={3000}
@@ -288,12 +291,12 @@ function Menu() {
   )
 }
 
-function useWeather(city: string) {
-  return useQuery<WeatherData, any>('weather', () => fetchWeather(city), { refetchInterval: 5000 })
+async function fetchGithubUser(username: string) {
+  return await axios.get(`https://api.github.com/users/${username}`).then((r) => r.data)
 }
 
-async function fetchMe() {
-  return await axios.get(`https://api.github.com/users/rikuvan`).then((r) => r.data)
+function useWeather(city: string) {
+  return useQuery<WeatherData, any>('weather', () => fetchWeather(city), { refetchInterval: 5000 })
 }
 
 async function fetchWeather(city?: string, country = 'finland') {

@@ -9,22 +9,22 @@ specifiers:
   msw: ^0.36.3
   react: ^17.0.2
   react-dom: ^17.0.2
-  react-location: ^3.2.16
-  react-location-devtools: ^3.2.16
+  react-location: ^3.3.0
+  react-location-devtools: ^3.3.0
   react-location-simple-cache: ^3.2.16
-  react-query: ^3.34.1
+  react-query: ^3.34.4
   typescript: ^4.4.4
   valtio: ^1.2.7
   vite: ^2.7.0
 
 dependencies:
   axios: 0.24.0
-  jotai: 1.4.7_69dea54658ad3c7a2e37cb2ec48b5372
+  jotai: 1.4.7_e8ce91c051dad254d6131f2dd1aba689
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
-  react-location: 3.2.16_react-dom@17.0.2+react@17.0.2
-  react-location-devtools: 3.2.16_react-dom@17.0.2+react@17.0.2
-  react-query: 3.34.1_react-dom@17.0.2+react@17.0.2
+  react-location: 3.3.0_react-dom@17.0.2+react@17.0.2
+  react-location-devtools: 3.3.0_react-dom@17.0.2+react@17.0.2
+  react-query: 3.34.4_react-dom@17.0.2+react@17.0.2
   valtio: 1.2.7_react@17.0.2
 
 devDependencies:
@@ -285,6 +285,13 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.9
+    dev: true
+
+  /@babel/runtime/7.16.5:
+    resolution: {integrity: sha512-TXWihFIS3Pyv5hzR7j6ihmeLkZfrXGxAr5UfSl8CHf+6q/wpiYDkUau0czckpYG8QmnCIuPpdLtuA9VmuGGyMA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.9
 
   /@babel/template/7.16.0:
     resolution: {integrity: sha512-MnZdpFD/ZdYhXwiunMqqgyZyucaYsbL0IrjoGjaVhGilz+x8YB++kRfygSOIj1yOtWKPlx7NBp+9I1RQSgsd5A==}
@@ -515,7 +522,7 @@ packages:
   /broadcast-channel/3.7.0:
     resolution: {integrity: sha512-cIAKJXAxGJceNZGTZSBzMxzyOn72cVgPnKx4dc6LRjQgbaJUQqhy5rzL3zbMxkMWsGKkv2hSFkPRMEXfoMZ2Mg==}
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.16.5
       detect-node: 2.1.0
       js-sha3: 0.8.0
       microseconds: 0.2.0
@@ -653,6 +660,12 @@ packages:
   /core-js/3.19.3:
     resolution: {integrity: sha512-LeLBMgEGSsG7giquSzvgBrTS7V5UL6ks3eQlUSbN8dJStlLFiRzUm5iqsRyzUB8carhfKjkJ2vzKqE6z1Vga9g==}
     requiresBuild: true
+    dev: true
+
+  /core-js/3.20.0:
+    resolution: {integrity: sha512-KjbKU7UEfg4YPpskMtMXPhUKn7m/1OdTHTVjy09ScR2LVaoUXe8Jh0UdvN2EKUR6iKTJph52SJP95mAB0MnVLQ==}
+    requiresBuild: true
+    dev: false
 
   /csstype/3.0.10:
     resolution: {integrity: sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==}
@@ -987,7 +1000,7 @@ packages:
   /history/5.1.0:
     resolution: {integrity: sha512-zPuQgPacm2vH2xdORvGGz1wQMuHSIB56yNAy5FnLuwOwgSYyPKptJtcMm6Ev+hRGeS+GzhbmRacHzvlESbFwDg==}
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.16.5
 
   /iconv-lite/0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -1079,7 +1092,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /jotai/1.4.7_69dea54658ad3c7a2e37cb2ec48b5372:
+  /jotai/1.4.7_e8ce91c051dad254d6131f2dd1aba689:
     resolution: {integrity: sha512-EZFmhovnufIVoH0OAW6kuOv8RLjCX2HvHEqzwRG79l/LDeyp1BI+85vrEpR/fQmqh3jUhY4SyjhboEItd4+reQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -1114,7 +1127,7 @@ packages:
         optional: true
     dependencies:
       react: 17.0.2
-      react-query: 3.34.1_react-dom@17.0.2+react@17.0.2
+      react-query: 3.34.4_react-dom@17.0.2+react@17.0.2
       valtio: 1.2.7_react@17.0.2
     dev: false
 
@@ -1165,7 +1178,7 @@ packages:
   /match-sorter/6.3.1:
     resolution: {integrity: sha512-mxybbo3pPNuA+ZuCUhm5bwNkXrJTbsk5VWbR5wiwz/GC6LIiegBGn2w3O08UG/jdbYLinw51fSQ5xNU1U3MgBw==}
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.16.5
       remove-accents: 0.4.2
     dev: false
 
@@ -1352,18 +1365,18 @@ packages:
       scheduler: 0.20.2
     dev: false
 
-  /react-location-devtools/3.2.16_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-J0s3n102WQsvxSPKfrU4ypKlCMt6wjBgsinRzoIXZUxZHZznBClK1U5darX68iLgzsZ88IYKv4XgwLCd3HCNUQ==}
+  /react-location-devtools/3.3.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-o7wEmW7yrB2T66rDN80eQs6tZ+dgNoiZTbCtK2Hku85JQn1wMlR9T83gGBv4zW8bcUz87h0oiG9DEv587zAG/Q==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
     dependencies:
-      '@babel/runtime': 7.16.3
-      core-js: 3.19.3
+      '@babel/runtime': 7.16.5
+      core-js: 3.20.0
       fast-async: 7.0.6
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-location: 3.2.16_react-dom@17.0.2+react@17.0.2
+      react-location: 3.3.0_react-dom@17.0.2+react@17.0.2
       ts-toolbelt: 9.6.0
     dev: false
 
@@ -1395,9 +1408,25 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       ts-toolbelt: 9.6.0
+    dev: true
 
-  /react-query/3.34.1_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-EE7PVynHqpWDFwhxNH7Oq4VOX8iQBE7Gw8ZZDXSNdOZifz2f382S9ZLJ546sHttQ8IBXPilPi9nxNXjhLmJBZw==}
+  /react-location/3.3.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-0ME2sVcldYcTGB4DxbD+00wuXHY9NeACjhub3+MKOsBxnTSMQ5P2XWZZwql5IyL9Fj9IL1CjdUnoT4hCL1bCCQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@babel/runtime': 7.16.5
+      core-js: 3.20.0
+      fast-async: 7.0.6
+      history: 5.1.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      ts-toolbelt: 9.6.0
+    dev: false
+
+  /react-query/3.34.4_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-1Pa7pNJF9I+UdQ1RvqmBO9tWvBNfzNeJM3vYApcE2SL4Hbwy6q4U7ce4u+SWQnLMFit3z8WWp9OXpcDqEQ/E1A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: '*'
@@ -1408,7 +1437,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.16.5
       broadcast-channel: 3.7.0
       match-sorter: 6.3.1
       react: 17.0.2
@@ -1637,7 +1666,7 @@ packages:
   /unload/2.2.0:
     resolution: {integrity: sha512-B60uB5TNBLtN6/LsgAf3udH9saB5p7gqJwcFfbOEZ8BcBHnGwCf6G/TGiEqkRAxX7zAFIUtzdrXQSdL3Q/wqNA==}
     dependencies:
-      '@babel/runtime': 7.16.3
+      '@babel/runtime': 7.16.5
       detect-node: 2.1.0
     dev: false
 

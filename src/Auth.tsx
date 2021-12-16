@@ -4,6 +4,9 @@ import { Outlet, useMatch } from 'react-location'
 
 import { LocationGenerics } from './App'
 
+// import { useSnapshot } from 'valtio'
+// import {auth as valtioAuth, login, logout} from './Auth'
+
 export interface User {
   id: number
   name: string
@@ -29,7 +32,7 @@ type AuthContext = {
   logout: () => void
 } & AuthContextState
 
-type AuthContextState = {
+export type AuthContextState = {
   status: 'loggedOut' | 'loggedIn'
   username?: string
 }
