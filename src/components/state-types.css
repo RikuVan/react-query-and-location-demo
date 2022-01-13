@@ -1,0 +1,28 @@
+.state-types-container {
+  display: grid;
+  grid-gap: 5px;
+  font-size: 18px;
+  grid-template-columns: 200px 200px 200px 200px;
+  grid-template-areas:
+    'reactive atoms one-way two-way'
+    'api api api api'
+    'react react react fsm';
+}
+
+.api {
+  grid-area: api;
+}
+
+.react {
+  grid-area: react;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  padding: 50px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+}

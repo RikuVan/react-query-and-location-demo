@@ -56,7 +56,6 @@ const routes: Route<LocationGenerics>[] = [
             queryClient.getQueryData('weather') ??
             queryClient.fetchQuery('weather', () => fetchWeather('tampere')).then(() => ({}))
           )
-          return {}
         },
       },
       {

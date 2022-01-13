@@ -1,9 +1,11 @@
 import { ReduxVsQueryTable } from './components/ReduxVsQueryTable'
+import { StateManagementChart } from './components/StateManagementChart'
 
 export function Home() {
   return (
     <main>
       <h1>Home</h1>
+      <StateManagementChart />
       <h3>Do we need Redux?</h3>
       <blockquote>
         For a vast majority of applications, the truly globally accessible client state that is left
