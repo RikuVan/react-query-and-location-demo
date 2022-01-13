@@ -50,3 +50,13 @@ dd {
   padding: 0;
   margin: 2em 0;
 }
+
+.auth-status {
+  padding: 1em 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lg-input {
+  width: 500px;
+}

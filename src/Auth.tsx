@@ -1,11 +1,13 @@
 import * as React from 'react'
 
 import { Outlet, useMatch } from 'react-location'
+import { UserState, setUser, userState } from './user'
 
+import { Credentials } from './Signup'
 import { LocationGenerics } from './App'
-
-// import { useSnapshot } from 'valtio'
-// import {auth as valtioAuth, login, logout} from './Auth'
+import { supabase } from './supabase'
+import { useMutation } from 'react-query'
+import { useSnapshot } from 'valtio'
 
 export interface User {
   id: number
@@ -27,83 +29,70 @@ function User() {
   )
 }
 
-type AuthContext = {
-  login: (username: string) => void
-  logout: () => void
-} & AuthContextState
+export function useUser(): UserState {
+  const snap = useSnapshot(userState)
 
-export type AuthContextState = {
-  status: 'loggedOut' | 'loggedIn'
-  username?: string
-}
+  React.useEffect(() => {
+    const session = supabase.auth.session()
+    setUser(session?.user)
+    // Listen for changes on auth state (logged in, signed out, etc.)
+    const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      setUser(session?.user)
+    })
 
-export const AuthContext = React.createContext<AuthContext>(null!)
+    return () => {
+      listener?.unsubscribe()
+    }
+  }, [])
 
-export function AuthProvider(props: { children: React.ReactNode }) {
-  const [state, setState] = React.useState<AuthContextState>({
-    status: 'loggedOut',
-  })
-
-  const login = (username: string) => {
-    setState({ status: 'loggedIn', username })
-  }
-
-  const logout = () => {
-    setState({ status: 'loggedOut' })
-  }
-
-  const contextValue = React.useMemo(
-    () => ({
-      ...state,
-      login,
-      logout,
-    }),
-    [state]
-  )
-
-  return <AuthContext.Provider value={contextValue} children={props.children} />
+  return snap
 }
 
 export function useAuth() {
-  return React.useContext(AuthContext)
+  const user = useUser()
+  async function login(email: string, password: string) {
+    const { error, user } = await supabase.auth.signIn({
+      email,
+      password,
+    })
+    if (error) {
+      throw error
+    } else {
+      setUser(user)
+    }
+    return user
+  }
+
+  async function logout() {
+    await supabase.auth.signOut()
+  }
+  return { login, logout, ...user }
 }
 
 export function Auth() {
-  const auth = useAuth()
-  const [username, setUsername] = React.useState('')
+  const { login, logout, status } = useAuth()
+  const { mutate } = useMutation(({ email, password }: Credentials) => login(email, password))
+  const emailRef = React.useRef<HTMLInputElement>(null)
+  const passwordRef = React.useRef<HTMLInputElement>(null)
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    auth.login(username)
+    mutate({
+      email: emailRef.current?.value as string,
+      password: passwordRef.current?.value as string,
+    })
   }
 
-  return auth.status === 'loggedIn' ? (
+  return status === 'loggedIn' ? (
     <Outlet />
   ) : (
     <main>
       <h3>You must log in!</h3>
       <form onSubmit={onSubmit}>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        />
-        <button onClick={() => auth.logout()}>Login</button>
+        <input ref={emailRef} placeholder="email" />
+        <input ref={passwordRef} placeholder="password" type="password" />
+        <button type="submit">Login</button>
       </form>
-    </main>
-  )
-}
-
-export function Authenticated() {
-  const auth = useAuth()
-
-  return (
-    <main>
-      <p>
-        You're authenticated! Your username is <strong>{auth.username}</strong>
-      </p>
-      <button onClick={() => auth.logout()}>Log out</button>
     </main>
   )
 }

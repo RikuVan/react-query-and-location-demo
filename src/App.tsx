@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import * as React from 'react'
 
-import { Auth, AuthProvider, Authenticated, User } from './Auth'
+import { Auth, User } from './Auth'
 import {
   Link,
   MakeGenerics,
@@ -21,8 +21,11 @@ import { WizardFailure, WizardOne, WizardSuccess, WizardTwo } from './components
 
 import { Books } from './Books'
 import { Home } from './Home'
+import { PinBoard } from './PinBoard'
+import { PinForm } from './PinBoard'
 import { ReactLocationDevtools } from 'react-location-devtools'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { Signup } from './Signup'
 import { Terms } from './components/Terms'
 import axios from 'axios'
 
@@ -44,6 +47,9 @@ const routes: Route<LocationGenerics>[] = [
   {
     path: '/',
     element: <Home />,
+    loader: async () => {
+      return queryClient.prefetchQuery('weather', () => fetchWeather('tampere')).then(() => ({}))
+    },
   },
   {
     path: '/weather',
@@ -69,15 +75,20 @@ const routes: Route<LocationGenerics>[] = [
     element: <Books />,
   },
   {
-    path: '/protected',
+    path: '/pinboard',
     element: <Auth />,
     children: [
       {
         path: '/',
-        element: <Authenticated />,
+        element: <PinBoard />,
+      },
+      {
+        path: '/new',
+        element: <PinForm />,
       },
     ],
   },
+  { path: 'signup', element: <Signup /> },
   {
     path: '/form',
     element: <Form />,
@@ -129,16 +140,14 @@ export const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Router location={location} routes={routes}>
-          <header>
-            <Menu />
-          </header>
-          <Outlet />
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ReactLocationDevtools position="bottom-right" />
-        </Router>
-      </AuthProvider>
+      <Router location={location} routes={routes}>
+        <header>
+          <Menu />
+        </header>
+        <Outlet />
+        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactLocationDevtools position="bottom-right" />
+      </Router>
       <ToastContainer />
     </QueryClientProvider>
   )
@@ -152,7 +161,7 @@ function Menu() {
           ['.', 'Home'],
           ['books', 'Books'],
           ['weather', 'Weather'],
-          ['protected', 'Protected'],
+          ['pinboard', 'Pinboard'],
           ['form', 'Form'],
           ['about', 'About'],
         ].map(([to, label]) => {

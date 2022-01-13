@@ -60,7 +60,11 @@ export function Weather() {
 }
 
 function useWeather(city: string) {
-  return useQuery<WeatherData, any>('weather', () => fetchWeather(city), { refetchInterval: 5000 })
+  return useQuery<WeatherData, any>('weather', () => fetchWeather(city), {
+    refetchInterval: 5000,
+    staleTime: 5000,
+    cacheTime: 0,
+  })
 }
 
 export async function fetchWeather(city?: string, country = 'finland') {
