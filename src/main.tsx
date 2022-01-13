@@ -22,7 +22,7 @@ ReactDOM.render(
 )
 
 async function run() {
-  await prepareServiceWorker()
+  // await prepareServiceWorker()
 
   ReactDOM.render(
     <React.StrictMode>

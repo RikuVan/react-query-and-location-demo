@@ -1,7 +1,7 @@
 import './city-weather.css'
 
 import React from 'react'
-import { WeatherData } from '../App'
+import { WeatherData } from '../Weather'
 
 export function CityWeather(props: { data?: WeatherData }) {
   const { data } = props

@@ -28,3 +28,25 @@ main {
   font-size: 20px;
   padding: 1em;
 }
+
+dl {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: max-content auto;
+  font-size: 1em;
+}
+
+dt {
+  grid-column-start: 1;
+  font-weight: bold;
+}
+
+dd {
+  grid-column-start: 2;
+}
+
+.book-list {
+  list-style: none;
+  padding: 0;
+  margin: 2em 0;
+}

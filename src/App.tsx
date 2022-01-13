@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css'
+
 import * as React from 'react'
 
 import { Auth, AuthProvider, Authenticated, User } from './Auth'
@@ -13,55 +15,16 @@ import {
   useNavigate,
 } from 'react-location'
 import { QueryClient, QueryClientProvider, useMutation, useQuery } from 'react-query'
+import { ToastContainer, toast } from 'react-toastify'
+import { Weather, fetchWeather } from './Weather'
 import { WizardFailure, WizardOne, WizardSuccess, WizardTwo } from './components/Wizard'
 
-import { CityWeather } from './components/CityWeather'
+import { Books } from './Books'
+import { Home } from './Home'
 import { ReactLocationDevtools } from 'react-location-devtools'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { ReduxVsQueryTable } from './components/ReduxVsQueryTable'
+import { Terms } from './components/Terms'
 import axios from 'axios'
-import { delayFn } from './utils'
-
-export type WeatherData = {
-  coord: {
-    lon: string
-    lat: string
-  }
-  weather: {
-    id: number
-    main: string
-    description: string
-    icon: string
-  }[]
-  main: {
-    temp: number
-    feels_like: number
-    temp_min: number
-    temp_max: number
-    pressure: number
-    humidity: number
-  }
-  visibility: number
-  wind: {
-    speed: number
-    deg: number
-  }
-  clouds: {
-    all: number
-  }
-  dt: number
-  sys: {
-    type: number
-    id: number
-    country: 'FI'
-    sunrise: number
-    sunset: number
-  }
-  timezone: number
-  id: number
-  cod: number
-  name: string
-}
 
 export type LocationGenerics = MakeGenerics<{
   LoaderData: {
@@ -99,12 +62,12 @@ const routes: Route<LocationGenerics>[] = [
       {
         path: ':city',
         element: <Weather />,
-        loader: async ({ params: { city } }) =>
-          // or await queryClient.prefetchQuery('weather', fetchWeather)
-          // prefetch is good because it is skipped in their is valid cache
-          queryClient.fetchQuery('weather', () => fetchWeather(city)).then(() => ({})),
       },
     ],
+  },
+  {
+    path: '/books',
+    element: <Books />,
   },
   {
     path: '/protected',
@@ -151,8 +114,15 @@ const location = new ReactLocation<LocationGenerics>()
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 60,
+      retry: 1,
+      staleTime: 1000 * 60,
       cacheTime: 1000 * 60 * 60,
+      onError: (err) => {
+        toast.dismiss()
+        toast.error(err instanceof Error ? err.message : 'Fetching error', {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      },
     },
   },
 })
@@ -170,7 +140,41 @@ function App() {
           <ReactLocationDevtools position="bottom-right" />
         </Router>
       </AuthProvider>
+      <ToastContainer />
     </QueryClientProvider>
+  )
+}
+
+function Menu() {
+  return (
+    <nav>
+      <ul>
+        {[
+          ['.', 'Home'],
+          ['books', 'Books'],
+          ['weather', 'Weather'],
+          ['protected', 'Protected'],
+          ['form', 'Form'],
+          ['about', 'About'],
+        ].map(([to, label]) => {
+          return (
+            <li key={to}>
+              <Link
+                to={to}
+                getActiveProps={() => ({
+                  style: {
+                    textDecoration: 'underline',
+                  },
+                })}
+                preload={3000}
+              >
+                {label}
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </nav>
   )
 }
 
@@ -183,41 +187,7 @@ function About() {
       <h1>About</h1>
       <p>{dude?.name}</p>
       <img src={dude.avatar_url as string} />
-    </main>
-  )
-}
-
-function Weather() {
-  const { params } = useMatch()
-  const { status, data } = useWeather(params.city)
-  return (
-    <main key={status}>
-      <h1>Weather</h1>
-      <CityWeather data={data} />
-    </main>
-  )
-}
-
-function Home() {
-  return (
-    <main>
-      <h1>Home</h1>
-      <h3>Do we need Redux?</h3>
-      <blockquote>
-        For a vast majority of applications, the truly globally accessible client state that is left
-        over after migrating all of your async code to React Query is usually very tiny.
-      </blockquote>
-      <h3>What common problems are we solving?</h3>
-      <ul>
-        <li>Prop drilling</li>
-        <li>Waterfall loading</li>
-        <li>Rerenders</li>
-        <li>UI synchronization</li>
-        <li>Stale state</li>
-        <li>First paint</li>
-        <li>Complexity</li>
-      </ul>
-      <ReduxVsQueryTable />
+      <Terms />
     </main>
   )
 }
@@ -259,56 +229,8 @@ function Form() {
   )
 }
 
-function Menu() {
-  return (
-    <nav>
-      <ul>
-        {[
-          ['.', 'Home'],
-          ['weather', 'Weather'],
-          ['protected', 'Protected'],
-          ['form', 'Form'],
-          ['about', 'About'],
-        ].map(([to, label]) => {
-          return (
-            <li key={to}>
-              <Link
-                to={to}
-                getActiveProps={() => ({
-                  style: {
-                    textDecoration: 'underline',
-                  },
-                })}
-                preload={3000}
-              >
-                {label}
-              </Link>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
-  )
-}
-
 async function fetchGithubUser(username: string) {
   return await axios.get(`https://api.github.com/users/${username}`).then((r) => r.data)
-}
-
-function useWeather(city: string) {
-  return useQuery<WeatherData, any>('weather', () => fetchWeather(city), { refetchInterval: 5000 })
-}
-
-async function fetchWeather(city?: string, country = 'finland') {
-  return await delayFn(() =>
-    axios
-      .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city ?? 'tampere'},${country}&APPID=${
-          import.meta.env.VITE_OPEN_WEATHER_API_KEY
-        }`
-      )
-      .then((r) => r.data)
-  )
 }
 
 export default App
