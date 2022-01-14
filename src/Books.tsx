@@ -26,7 +26,8 @@ type Data = {
 const searchState = proxy({
   query: '',
 })
-const setQuery = (e: any) => (searchState.query = e.target.value)
+
+const setQuery = (e: React.ChangeEvent<HTMLInputElement>) => (searchState.query = e.target.value)
 
 export function Books() {
   const observerRef = React.useRef<IntersectionObserver | null>(null)
