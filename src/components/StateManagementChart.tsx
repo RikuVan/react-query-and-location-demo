@@ -23,7 +23,7 @@ export function StateManagementChart() {
         </div>
         <div className="box api">
           <h2>Server state</h2>
-          <p>sw, React-query, React-location, Apollo-Client</p>
+          <p>swr, React-query, React-location, Apollo-Client</p>
         </div>
         <div className="box react">
           <h2>Just React</h2>

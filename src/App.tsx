@@ -121,18 +121,27 @@ const routes: Route<LocationGenerics>[] = [
 ]
 
 const location = new ReactLocation<LocationGenerics>()
+
+// also passed variables and context
+const globalOnError = (err: unknown) => {
+  toast.dismiss()
+  toast.error(err instanceof Error ? err.message : 'Fetching error', {
+    position: toast.POSITION.TOP_RIGHT,
+  })
+}
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      // default 3
       retry: 1,
       staleTime: 1000 * 60,
       cacheTime: 1000 * 60 * 60,
-      onError: (err) => {
-        toast.dismiss()
-        toast.error(err instanceof Error ? err.message : 'Fetching error', {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      },
+      onError: globalOnError,
+    },
+    mutations: {
+      retry: 0,
+      onError: globalOnError,
     },
   },
 })

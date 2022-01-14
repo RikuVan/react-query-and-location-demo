@@ -60,3 +60,27 @@ dd {
 .lg-input {
   width: 500px;
 }
+
+.feather {
+  width: 24px;
+  height: 24px;
+  stroke: grey;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+button.ghost {
+  padding: 3px 0 0;
+  margin: none;
+  background: none;
+}
+
+button.ghost:hover .feather {
+  stroke: #fff;
+}
+
+.react-confirm-alert-overlay.pinboard-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}

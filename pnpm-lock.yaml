@@ -9,7 +9,9 @@ specifiers:
   axios: ^0.24.0
   jotai: ^1.4.7
   msw: ^0.36.3
+  prop-types: ^15.8.1
   react: ^17.0.2
+  react-confirm-alert: ^2.7.0
   react-dom: ^17.0.2
   react-location: ^3.3.0
   react-location-devtools: ^3.3.0
@@ -24,7 +26,9 @@ dependencies:
   '@supabase/supabase-js': 1.29.1
   axios: 0.24.0
   jotai: 1.4.7_55566c1d9007a60a6016de8fd716af75
+  prop-types: 15.8.1
   react: 17.0.2
+  react-confirm-alert: 2.7.0_react-dom@17.0.2+react@17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-location: 3.3.0_react-dom@17.0.2+react@17.0.2
   react-location-devtools: 3.3.0_react-dom@17.0.2+react@17.0.2
@@ -1512,8 +1516,26 @@ packages:
       source-map-js: 1.0.1
     dev: true
 
+  /prop-types/15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+    dev: false
+
   /proxy-compare/2.0.2:
     resolution: {integrity: sha512-3qUXJBariEj3eO90M3Rgqq3+/P5Efl0t/dl9g/1uVzIQmO3M+ql4hvNH3mYdu8H+1zcKv07YvL55tsY74jmH1A==}
+    dev: false
+
+  /react-confirm-alert/2.7.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-21NWtGK/e85+ZX3TLRpMc3IsU5Kj6Z9ElCOrkTIlwMzV9EancyXNlkqHGbtKP63a2iS6g5hOxROokmJOqKQiXA==}
+    peerDependencies:
+      react: '>=16.0.0'
+      react-dom: '>=16.0.0'
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /react-dom/17.0.2_react@17.0.2:
@@ -1525,6 +1547,10 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
+    dev: false
+
+  /react-is/16.13.1:
+    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
   /react-location-devtools/3.3.0_react-dom@17.0.2+react@17.0.2:
